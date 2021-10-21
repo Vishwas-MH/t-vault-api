@@ -19,8 +19,8 @@ const PostSchema = mongoose.Schema({
     },
     Type:{
         type: String,
-        required: true,
         enum: ["personal", "corporate", "others"],
+        default: "personal",
     },
     Desc:{
         type: String,
