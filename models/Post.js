@@ -28,7 +28,7 @@ const PostSchema = mongoose.Schema({
         minlength: 10,
     },
     folder:[{ 
-        name: String,
+        type: String,
     }],
     Updated: {
         type: Date,

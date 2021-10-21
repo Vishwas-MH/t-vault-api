@@ -77,11 +77,11 @@ router.delete("/:postId", async (req, res) => {
     }
 });
 
-router.patch("/:postId/folder", async (req, res) => {
+router.put("/folder/:postId", async (req, res) => {
     try {
         const addFolder = await Post.updateOne({ _id: req.params.postId },
             {
-                $push: { folder: { name: req.body.SafeName } },
+                $push: { folder: req.body.folder },
             },
             { new: true }
         );
