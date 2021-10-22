@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const validate = require('mongoose-validator');
-const secretSchema = require('./secrets');
+
 
 var folderValidator = [
     validate({
@@ -14,6 +14,15 @@ var folderValidator = [
   })
 ]
 
+const secretSchema = mongoose.Schema({
+    name: {
+        type:String,
+        required:true,
+        minlength:3,
+        unique:true,
+        maxLength: 20,
+    }
+})
 
 const PostSchema = mongoose.Schema({
     // id:{
@@ -24,12 +33,14 @@ const PostSchema = mongoose.Schema({
         required: true,
         unique: true,
         minlength: 1,
+        //maxLength: 20,
     },
     Owner:{
         type: String,
         required: true,
         trim: true,
         minlength: 1,
+        //maxLength: 20,
     },
     Type:{
         type: String,
@@ -43,12 +54,6 @@ const PostSchema = mongoose.Schema({
     },
     folder:{
         type: [String],
-        
-        validator : (value) => {
-            console.log(/^\w+$/.test(value));
-        },
-        message: props => `${props.value} is not valid!`,
-        //validate: folderValidator,
     },
     Updated: {
         type: Date,
