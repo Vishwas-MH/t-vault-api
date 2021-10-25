@@ -1,4 +1,5 @@
 const express = require('express');
+const { db } = require('../models/Post');
 const router = express.Router();
 const Post = require('../models/Post');
 
@@ -68,7 +69,7 @@ router.patch("/:postId", async (req, res) => {
 
 router.delete("/:postId", async (req, res) => {
     try {
-        const deletePost = await Post.remove({ _id: req.params.postId });
+        const deletePost = await Post.deleteOne({ _id: req.params.postId });
         res.json(deletePost);
     }
     catch (err) {
@@ -77,7 +78,25 @@ router.delete("/:postId", async (req, res) => {
     }
 });
 
-router.put("/folder/:postId", async (req, res) => {
+router.patch("/folder/:postId", async (req, res) => {
+
+    try{
+        //console.log(req.body);
+        //console.log(matcher);
+        const matcher = await Post.find({
+            _id: req.params.postId,
+            folder: req.body.folder,
+        })
+        //console.log(matcher);
+        if (matcher.length > 0)
+            return res.send("Secret already exists!");
+    }
+    catch (err) {
+        res.json({ message: err });
+        console.log(err);
+    }
+
+
     try {
         const addFolder = await Post.updateOne({ _id: req.params.postId },
             {

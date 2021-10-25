@@ -1,18 +1,4 @@
 const mongoose = require('mongoose');
-const validate = require('mongoose-validator');
-
-
-var folderValidator = [
-    validate({
-    validator: 'matches',
-    arguments: /^\w+$/,
-  }),
-  validate({
-    validator: 'isLength',
-    arguments: [3, 50],
-    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters',
-  })
-]
 
 const secretSchema = mongoose.Schema({
     name: {
@@ -54,6 +40,7 @@ const PostSchema = mongoose.Schema({
     },
     folder:{
         type: [String],
+        sparse:true,
     },
     Updated: {
         type: Date,
